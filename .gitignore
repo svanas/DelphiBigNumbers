@@ -48,6 +48,9 @@ info.plist.TemplateOSX.xml
 **/*.printerrors
 **/FastFibonacci/**
 ls-tree.txt
+**/XBigIntegerDevelopment*
+**/Velthuis.Magnitudes.pas
+**/X.Big*
 DataGenerators/BigIntegers/Java/BigIntegerTestDataGenerator/nbproject/private/**
 DataGenerators/BigIntegers/Java/BigIntegerTestDataGenerator/build/**
 DataGenerators/BigIntegers/Java/BigIntegerTestDataGenerator/dist/**
@@ -73,6 +76,9 @@ DataGenerators/BigRationals/BigRationalTestDataGenerator/dist/
 Docs/**
 **/TestNthRoot64.*
 **/Profiling/**
+Source/IMag.BigIntegers.pas
+Source/Velthuis.IMagnitudes.pas
+Tests/BigIntegers/IMag.TestBigIntegers.pas
 !Tests/BigNumberTests.groupproj
 *.hpp
 !**/Velthuis.BigIntegers.operators.hpp

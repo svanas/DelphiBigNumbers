@@ -12,15 +12,16 @@ program BigIntegerDevelopmentTests;
 }
 
 // FastMM4 can slow down testing a lot.
-{ $DEFINE USEFASTMM4}
+{$DEFINE USEFASTMM4}
 
 {$IFDEF CONSOLE_TESTRUNNER}
 {$APPTYPE CONSOLE}
 {$ENDIF}
 
+{$WARN UNIT_EXPERIMENTAL OFF}
+
 uses
   {$IFDEF USEFASTMM4}
-  FastMM4,
   {$ENDIF }
   DUnitTestRunner,
   Velthuis.Sizes in '..\..\Source\Velthuis.Sizes.pas',
@@ -32,15 +33,18 @@ uses
   Velthuis.BigDecimals in '..\..\Source\Velthuis.BigDecimals.pas',
   TestBigIntegers in 'TestBigIntegers.pas',
   Velthuis.BigRationals in '..\..\Source\Velthuis.BigRationals.pas',
-  Velthuis.BigIntegers.Primes in '..\..\Source\Velthuis.BigIntegers.Primes.pas',
   Velthuis.BigIntegers in '..\..\Source\Velthuis.BigIntegers.pas',
   Velthuis.StrConsts in '..\..\Source\Velthuis.StrConsts.pas',
-  Velthuis.XorShifts in '..\..\Source\Velthuis.XorShifts.pas';
+  Velthuis.XorShifts in '..\..\Source\Velthuis.XorShifts.pas',
+  CompilerAndRTLVersions in '..\..\Source\CompilerAndRTLVersions.pas',
+  Velthuis.BigIntegers.Primes in '..\..\Source\Velthuis.BigIntegers.Primes.pas';
 
 {$R *.RES}
 
 begin
+{$IFDEF USEFASTMM4}
   ReportMemoryLeaksOnShutdown := True;
+{$ENDIF}
   DoDebug := False;
   DUnitTestRunner.RunRegisteredTests;
 end.
