@@ -40,7 +40,8 @@ type
     procedure TestParse;
     procedure TestTryParse;
     procedure TestCreateBytes;
-    procedure TestCreateRandom;
+    procedure TestCreateIRandom;
+    procedure TestCreateRandom32;
     procedure TestCreateDouble;
     procedure TestIsZero;
     procedure TestIsPositive;
@@ -560,10 +561,10 @@ var
   BaseFactor, Factor, Product, BaseCaseProduct: BigInteger;
 begin
   R := TDelphiRandom.Create($123456);
-  BaseFactor := BigInteger.Create((BigInteger.ToomCook3Threshold + Random(100)) * 32, R);
+  BaseFactor := BigInteger.Create(1073 * BigInteger.ToomCook3Threshold, R);
   for I := 1 to 20 do
   begin
-    Factor := BigInteger.Create((BigInteger.ToomCook3Threshold + Random(100)) * 32, R);
+    Factor := BigInteger.Create(976 * BigInteger.ToomCook3Threshold, R);
     Product := BigInteger.MultiplyToomCook3(BaseFactor, Factor);
 
     // It is safe to assume that result given by MultiplyBaseCase is correct.
@@ -901,7 +902,7 @@ begin
   end;
 end;
 
-procedure TTestBigInteger.TestCreateRandom;
+procedure TTestBigInteger.TestCreateIRandom;
 var
   I, NumBits: Integer;
   ARandom: IRandom;
@@ -912,6 +913,27 @@ begin
   begin
     NumBits := I;
     Value := BigInteger.Create(NumBits, ARandom);
+    Check(Value.BitLength <= NumBits, Format('%s (bits = %d), Numbits = %d', [Value.ToString(16), Value.BitLength, NumBits]));
+  end;
+end;
+
+function Random32: UInt32;
+begin
+  Result := UInt32(RandSeed);
+end;
+
+procedure TTestBigInteger.TestCreateRandom32;
+var
+  I, NumBits: Integer;
+  Value: BigInteger;
+  Dummy: Integer;
+begin
+  Randomize;
+  for I := 0 to 1000 do
+  begin
+    NumBits := I;
+    Value := BigInteger.Create(NumBits, Random32);
+    Dummy := Random(MaxInt); // next random value
     Check(Value.BitLength <= NumBits, Format('%s (bits = %d), Numbits = %d', [Value.ToString(16), Value.BitLength, NumBits]));
   end;
 end;
